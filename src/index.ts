@@ -1,30 +1,10 @@
+import { AxiosRequestConfig } from "axios";
 import {
   PROVIDER_NAMES,
   DEFAULT_PROVIDERS,
   PROVIDER_RESOLVERS,
 } from "./provider-resolvers.js";
-
-/**
- * @typedef {object} Book
- * @property {string} isbn - The ISBN of the book.
- * @property {string} title - The title of the book.
- * @property {string[]} authors - The authors of the book.
- * @property {string} description - The overview of the book.
- * @property {number} [pageCount] - The number of pages in the book.
- * @property {string} format - The format of the book.
- * @property {string[]} categories - The subjects or categories of the book.
- * @property {string} publisher - The publisher of the book.
- * @property {string} publishedDate - The date the book was published.
- * @property {string | undefined} [language] - The language of the book.
- * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
- * @property {string} [link] - The link of the book.
- * @property {string} bookProvider - The provider of the book information.
- */
-
-/**
- * @typedef {import('./provider-resolvers.js').Providers} Providers
- * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
- */
+import { Book } from "./models/book.model.js";
 
 export default class Isbn {
   /**
@@ -32,18 +12,13 @@ export default class Isbn {
    */
   _providers = DEFAULT_PROVIDERS;
 
+  PROVIDER_NAMES: typeof PROVIDER_NAMES;
+
   constructor() {
     this.PROVIDER_NAMES = PROVIDER_NAMES;
   }
 
-  /**
-   * Sets the providers for the ISBN lookup.
-   * @param {string[]} providers - An array of provider names.
-   * @returns {object} - The current instance of the ISBN lookup.
-   * @throws {TypeError} - If `providers` is not an array.
-   * @throws {Error} - If any of the provided providers are not supported.
-   */
-  provider(providers) {
+  provider(providers: string[]): this {
     if (!Array.isArray(providers)) {
       throw new TypeError("`providers` must be an array.");
     }
@@ -72,7 +47,7 @@ export default class Isbn {
    * @returns {Promise<Book>} - A Promise that resolves to the book information.
    * @throws {Error} - If an error occurs while resolving the book information.
    */
-  async resolve(isbn, options = {}) {
+  async resolve(isbn: string, options: AxiosRequestConfig = {}): Promise<Book> {
     const messages = [];
     for (const provider of this._providers) {
       try {

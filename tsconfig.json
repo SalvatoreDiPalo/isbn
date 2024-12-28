@@ -4,7 +4,13 @@
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2021",
     "outDir": "dist",
-    "declarationMap": true
+    "module": "CommonJS",
+    "declarationMap": true,
+    "useUnknownInCatchVariables": false
   }
 }

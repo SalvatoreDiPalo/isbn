@@ -2,20 +2,13 @@
   "name": "@library-pals/isbn",
   "version": "1.4.2",
   "description": "Find books by ISBN",
-  "exports": {
-    ".": {
-      "types": "./types/index.d.ts",
-      "default": "./src/index.js"
-    }
-  },
-  "types": "./types/index.d.ts",
-  "type": "module",
-  "main": "src/index.js",
+  "type": "commonjs",
+  "main": "src/index.ts",
   "engines": {
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types",
+    "build": "tsc --allowJs --emitDeclarationOnly",
     "prepack": "npm run build",
     "lint": "eslint .",
     "pretest": "npm run build && npm run lint",
